@@ -37,6 +37,36 @@ namespace MODUL8
                 config = JsonSerializer.Deserialize<Config>(configJsonData);
                 return config;
             }
+            private void WriteNewConfigFile()
+            {
+                JsonSerializerOptions options = new JsonSerializerOptions()
+                {
+                    WriteIndented = true
+                };
+                String jsonString = JsonSerializer.Serialize(config, options);
+                File.WriteAllText(filePath, jsonString);
+            }
+        }
+        class UIConfig
+        {
+            public Config config;
+            public const String filePath = @"config.json";
+            public UIConfig() { … }
+            private Config ReadConfigFile() { … }
+            private void SetDefault() { … }
+            private void WriteNewConfigFile() { … }
+            public UIConfig()
+            {
+                try
+                {
+                    ReadConfigFile();
+                }
+                catch (Exception)
+                {
+                    SetDefault();
+                    WriteNewConfigFile();
+                }
+            }
         }
 
     }
